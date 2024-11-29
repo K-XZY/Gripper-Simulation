@@ -17,7 +17,7 @@
     object_name: Bottle
     object_mass: 0.1
     object_inertial_frame_position:
-    object_position: [0.5, 0, 0.5]
+    object_position: [1, 0, 1]
     object_orientation:
     camera_pos : [1, 2, 0.5]
     pitch : -20.0
@@ -27,8 +27,7 @@
 
 - motion:  
     #Pose_target  = [r, ri, rj, rk, p, pi, pj ,pk]  where r stands for rotation and p for translation  (Dual quaternion)
-    # pose_target: [0.0,-0.179477,0.063609,0.229520,-0.680244,0.357530,0.405682,0.494835]
-    pose_target: [0.0,1.0164927225999763, -0.001412024750300379, 0.003534945483248299,-0.680244,0.357530,0.405682,0.494835]
+    pose_target: [0.0,-0.179477,0.063609,0.229520,-0.680244,0.357530,0.405682,0.494835]
     #Set path to grip data (one datapoint for each joint in gripper,  threefingers = 10 joints, SH = 30)
     grip_path: ./data/grip/threeFingers.dat 
 

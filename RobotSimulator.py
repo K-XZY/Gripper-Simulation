@@ -5,10 +5,10 @@ import numpy as np
 import sys
 import pandas as pd
 sys.path.insert(1, 'utils/')
-from utils.simulation import sim
-from utils.Robot import Robot
-from utils.thing import Thing
-from utils.pointCloud import getPointCloud
+from simulation import sim
+from Robot import Robot
+from thing import Thing
+from pointCloud import getPointCloud
 from IPython import embed 
 
 class robotSimulator():
@@ -75,7 +75,7 @@ class robotSimulator():
             data = self.sim.motionParams["pose_target"]
 
             data = self.robot.createDQObject(data)
-            print(f"data = {data}")
+        
             self.robot.moveArmToEETarget(data,0.6)
             self.startButtonVal = p.readUserDebugParameter(self.sim.startButton) + 1.0
             
@@ -101,65 +101,19 @@ class robotSimulator():
                 self.container = Thing(self.sim.simParams["object_name"],onObject=self.table)
             else: 
                 self.container = Thing(self.sim.simParams["object_name"],self.sim.simParams["object_position"])
-                # print(f"self.container.getPOs: {self.container.getPos()}")
             self.objButtonVal = p.readUserDebugParameter(self.sim.objButton) + 1.0
 
     def readPlanPathButton(self):
-        # if p.readUserDebugParameter(self.sim.planButton) >= self.planButtonVal:
-        #     #TODO: add path planning
-        #     print("[INFO]: not yet implemented")
-        #     self.planButtonVal = p.readUserDebugParameter(self.sim.planButton) + 1.0
-        
         if p.readUserDebugParameter(self.sim.planButton) >= self.planButtonVal:
-            if hasattr(self, "container"):
-                print(f"Getting information from the container...")
-                print(f" continer.getInitpos: {self.container.getInitPos()}")
-                print(f" continer.getInitOrientaion: {self.container.getInitOrientation()}")
-                print(f" continer.getpos: {self.container.getPos()}") 
-                pos = self.container.getPos()
-                ori = self.container.getInitOrientation()
-                data = [0, *pos, *ori]
-                print(f"data = {data}")
-                data = self.robot.createDQObject(data)
-                print(f"data = {data}")
-                self.robot.moveArmToEETarget(data,1.6)
-
-            else:
-                print("[Error]: No object found")
+            #TODO: add path planning
+            print("[INFO]: not yet implemented")
             self.planButtonVal = p.readUserDebugParameter(self.sim.planButton) + 1.0
-            
-        # if p.readUserDebugParameter(self.sim.planButton) >= self.planButtonVal:
-        #     if hasattr(self, "container"):
-        #         # Get the current end-effector position and target object position
-        #         current_pos = np.array(self.robot.getPose())
-        #         target_pos = np.array(self.container.getPos())
 
-        #         # Calculate a direct path (list of waypoints) from current position to target
-        #         num_waypoints = 10  # Define how many points you want in the path
-        #         self.path = [current_pos + (target_pos - current_pos) * (i / num_waypoints) for i in range(1, num_waypoints + 1)]
-
-        #         print("[INFO]: Path planned with waypoints.")
-        #     else:
-        #         print("[ERROR]: No target object found to plan path.")
-        
-        # self.planButtonVal = p.readUserDebugParameter(self.sim.planButton) + 1.0
-        
     def readFollowPathButton(self):
         if p.readUserDebugParameter(self.sim.pathButton) >= self.pathButtonVal:
             #TODO: add follow path
             print("[INFO]: not yet implemented")
             self.pathButtonVal = p.readUserDebugParameter(self.sim.pathButton) + 1.0
-        # if p.readUserDebugParameter(self.sim.pathButton) >= self.pathButtonVal:
-        #     if hasattr(self, "path") and self.path:
-        #         epsilon = 0.01  # Set tolerance value
-        #         for waypoint in self.path:
-        #             dq_waypoint = self.robot.createDQObject(waypoint)  # Convert to DQ format if needed
-        #             self.robot.moveArmToEETarget(dq_waypoint, epsilon)
-        #         print("[INFO]: Path followed successfully.")
-        #     else:
-        #         print("[ERROR]: No path to follow. Please plan a path first.")
-
-        # self.pathButtonVal = p.readUserDebugParameter(self.sim.pathButton) + 1.0
 
     def readCameraButton(self):
         if p.readUserDebugParameter(self.sim.cameraButton) >= self.cameraButtonVal:
